@@ -5,7 +5,7 @@ class MetodoGrafico:
     def __init__(self, c1, c2, min):
         self.c = [c1, c2]
         self.min = min
-        #Essa inicialização diz que 0 <= x, y <= INF
+        #Essa inicialização diz que 0 <= x, y <= 𝐼𝑁𝐹
         self.Ab = [
             [-1, 0, 0],
             [1, 0, INF],
@@ -17,7 +17,7 @@ class MetodoGrafico:
             self.intercessions = [
                 [0, 0]
             ]
-        #Caso a função seja de maximização, o primeiro ponto é (INF, INF), já que a única restrição é x, y <= INF
+        #Caso a função seja de maximização, o primeiro ponto é (𝐼𝑁𝐹, 𝐼𝑁𝐹), já que a única restrição é x, y <= 𝐼𝑁𝐹
         else:
             self.intercessions = [
                 [INF, INF]
@@ -117,10 +117,10 @@ class MetodoGrafico:
         #Caso todas tenha sido satisfeitas retornamos True
         return True
 
-    # Retorna a intercessão que resulta no menor valor da função objetivo
+    # Retorna a intercessão que resulta no menor valor da função objetivo e o seu resultado
     def GetMin(self):
         n = len(self.intercessions)
-        #Inicializamos o menor valor como INF para que qualquer primeira intercessão seja menor
+        #Inicializamos o menor valor como 𝐼𝑁𝐹 para que qualquer primeira intercessão seja menor
         minValue = INF
         #Caso não haja solução esse é a solução padrão
         solution = [None, None]
@@ -140,12 +140,12 @@ class MetodoGrafico:
                     #Salvamos essa possível solução
                     solution = point
         #Retornamos o melhor ponto
-        return solution
+        return solution, minValue
 
-    # Retorna a intercessão que resulta no maior valor da função objetivo
+    # Retorna a intercessão que resulta no maior valor da função objetivo e o seu resultado
     def GetMax(self):
         n = len(self.intercessions)
-        #Inicializamos o maior valor como -INF para que qualquer primeira intercessão seja maior
+        #Inicializamos o maior valor como -𝐼𝑁𝐹 para que qualquer primeira intercessão seja maior
         maxValue = -INF
         #Caso não haja solução esse é a solução padrão
         solution = [None, None]
@@ -164,13 +164,21 @@ class MetodoGrafico:
                     maxValue = result
                     #Salvamos essa possível solução
                     solution = point
-        #Retornamos o melhor ponto  
-        return solution
+        #Retornamos o melhor ponto e o seu resultado
+        return solution, maxValue
 
     # Retorna uma solução ótima do problema. Caso a solução tenha alguma de suas coordenadas valendo 𝐼𝑁𝐹, retorna a string "Função Ilimitada".
     def GetSolution(self): 
         #Caso o problema seja de minimização retornamos a solução mínima
         if(self.min):
-            return self.GetMin()
+            solution, minimum = self.GetMin()
+            #Caso a solução tenha alguma de suas coordenadas valendo 𝐼𝑁𝐹
+            if(solution[0] == INF or solution[1] == INF):
+                print("Função Ilimitada")
+            return solution, minimum
         #Caso o problema seja de maximização retornamos a solução máxima
-        return self.GetMax()
+        solution, maximum = self.GetMax()
+        #Caso a solução tenha alguma de suas coordenadas valendo 𝐼𝑁𝐹
+        if(solution[0] == INF or solution[1] == INF):
+            print("Função Ilimitada")
+        return solution, maximum
