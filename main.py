@@ -1,5 +1,6 @@
 INF = 100000
 class MetodoGrafico:
+
     def __init__(self, c1, c2, min):
         self.c = [c1, c2]
         self.min = min
@@ -9,20 +10,21 @@ class MetodoGrafico:
             [0, -1, 0],
             [0, 1, INF]
         ]
+        self.intercessions = []
 
     # Retorna os elementos de uma matriz A 2x2
-    def GetElements(A):
+    def GetElements(self, A):
         return A[0][0], A[0][1], A[1][0], A[1][1]
 
     # Retorna o determinante de uma matriz A 2x2
-    def GetDeterminant(A):
-        a, b, c, d = GetElements(A)
+    def GetDeterminant(self, A):
+        a, b, c, d = self.GetElements(A)
         return (a*d) - (b*c)
 
     # Retorna o inverso da matriz A
-    def InvertMatrix(A):
-        a, b, c, d = GetElements(A)
-        determinant = GetDeterminant(A)
+    def InvertMatrix(self, A):
+        a, b, c, d = self.GetElements(A)
+        determinant = self.GetDeterminant(A)
         if(determinant == 0):
             print("Matriz não possui inversa, portando o sistema é impossível ou indeterminado")
             return None
@@ -33,25 +35,30 @@ class MetodoGrafico:
         return invertedMatrix
 
     #Multiplica a matriz A 2x2 pela matriz coluna b
-    def MultiplyMatrix(A, b):
+    def MultiplyMatrix(self, A, b):
         result = [(A[0][0] * b[0]) + (A[0][1] * b[1]), (A[1][0] * b[0]) + (A[1][1] * b[1])]
         return result
 
-    #Retorna a solução do sistema de equação formado pelas condições c1 e c2
-    def GetSolution(c1, c2):
-        A = [
-            [c1[0], c1[1]],
-            [c2[0], c2[1]]
-        ]
-        b = [c1[2], c2[2]]
-        invertedA = InvertMatrix(A)
-        solution = MultiplyMatrix(invertedA, b)
+    #Retorna a solução do sistema de equação formado pela multiplicação da matriz A 2x2 pela matriz coluna b
+    def GetSolutionAb(self, A, b):
+        invertedA = self.InvertMatrix(A)
+        solution = self.MultiplyMatrix(invertedA, b)
         return solution
-
 
     # Adiciona a inequação 𝑎1𝑥 + 𝑎2𝑦 <= 𝑏 à matriz 𝐴𝑏
     def AddEq(self, a1, b1, b):
         self.Ab.append([a1, b1, b])
+        for i in range(len(self.Ab)):
+            A = [
+                [a1, b1],
+                [self.Ab[i][0], self.Ab[i][1]]
+            ]
+            bValues = [b, self.Ab[i][2]]
+            if(self.GetDeterminant(A) != 0):
+                solution = self.GetSolutionAb(A, bValues)
+                if(self.CheckPoint(solution[0], solution[1]) and solution not in self.intercessions):
+                    self.intercessions.append(solution)
+
 
     # Lista as inequações, numeradas de 0 a 𝑛 − 1
     def ListEq(self):
@@ -59,6 +66,7 @@ class MetodoGrafico:
         for i in range(n):
             eq = self.Ab[i]
             print(f"Equação {i}: {eq[0]}*x {eq[1]}*y <= {eq[2]}")
+
     # Remove a 𝑘-ésima inequação da matriz 𝐴𝑏. Não é possível remover as inequações 0, 1, 2 e 3, dadas pela inicialização
     def RemoveEq(self, k): 
         if(k <= 3 and k >= 0):
@@ -73,6 +81,7 @@ class MetodoGrafico:
             if(((eq[0] * x0) + (eq[1] * y0)) > eq[2]):
                 return False
         return True
+
     # Retorna uma solução ótima do problema. Caso a solução tenha alguma de suas coordenadas valendo 𝐼𝑁𝐹, retorna a string "Função Ilimitada".
     def GetSolution(self): 
         pass
