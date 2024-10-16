@@ -39,10 +39,17 @@ class MetodoGrafico:
         result = [(A[0][0] * b[0]) + (A[0][1] * b[1]), (A[1][0] * b[0]) + (A[1][1] * b[1])]
         return result
 
+    #Conserta o "-0.0" que pode ocorrer em algumas multiplicações
+    def FormatValue(self, value):
+        if(abs(value) < 1e-10):
+            return 0.0
+        return value
+
     #Retorna a solução do sistema de equação formado pela multiplicação da matriz A 2x2 pela matriz coluna b
     def GetSolutionAb(self, A, b):
         invertedA = self.InvertMatrix(A)
         solution = self.MultiplyMatrix(invertedA, b)
+        solution = [self.FormatValue(value) for value in solution]
         return solution
 
     # Adiciona a inequação 𝑎1𝑥 + 𝑎2𝑦 <= 𝑏 à matriz 𝐴𝑏
