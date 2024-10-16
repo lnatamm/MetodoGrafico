@@ -10,7 +10,14 @@ class MetodoGrafico:
             [0, -1, 0],
             [0, 1, INF]
         ]
-        self.intercessions = []
+        if(self.min):
+            self.intercessions = [
+                [0, 0]
+            ]
+        else:
+            self.intercessions = [
+                [INF, INF]
+            ]
 
     # Retorna os elementos de uma matriz A 2x2
     def GetElements(self, A):
@@ -89,6 +96,36 @@ class MetodoGrafico:
                 return False
         return True
 
+    # Retorna a intercessão que resulta no menor valor da função objetivo
+    def GetMin(self):
+        n = len(self.intercessions)
+        minValue = INF
+        solution = [None, None]
+        for i in range(n):
+            point = self.intercessions[i]
+            if(self.CheckPoint(point[0], point[1])):
+                result = (point[0] * self.c[0]) + (point[1] * self.c[1])
+                if(result < minValue):
+                    minValue = result
+                    solution = point
+        return solution
+
+    # Retorna a intercessão que resulta no maior valor da função objetivo
+    def GetMax(self):
+        n = len(self.intercessions)
+        maxValue = -INF
+        solution = [None, None]
+        for i in range(n):
+            point = self.intercessions[i]
+            if(self.CheckPoint(point[0], point[1])):
+                result = (point[0] * self.c[0]) + (point[1] * self.c[1])
+                if(result > maxValue):
+                    maxValue = result
+                    solution = point
+        return solution
+
     # Retorna uma solução ótima do problema. Caso a solução tenha alguma de suas coordenadas valendo 𝐼𝑁𝐹, retorna a string "Função Ilimitada".
     def GetSolution(self): 
-        pass
+        if(self.min):
+            return self.GetMin()
+        return self.GetMax()
