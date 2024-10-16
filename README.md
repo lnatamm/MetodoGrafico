@@ -39,7 +39,7 @@ da região poligonal.
 >𝐴𝑏: uma matriz de três colunas onde as duas primeiras apresentam os coeficientes da matriz 𝐴 e a terceira
 >armazena a matriz coluna 𝑏.
 >### Métodos:
->### [Construtor(𝑐1, 𝑐2, 𝑚𝑖𝑛)](https://github.com/lnatamm/MetodoGrafico/blob/main/main.py#L3):
+>### [Construtor(𝑐1, 𝑐2, 𝑚𝑖𝑛)](https://github.com/lnatamm/MetodoGrafico/blob/main/main.py#L5):
 >Armazena a função objetivo com os valores 𝑐1
 >e 𝑐2
 >, bem como indica com um booleano
@@ -57,20 +57,20 @@ da região poligonal.
 >
 >Isso indica que 0 <= x, y <= 𝐼𝑁𝐹.
 >
->### [AddEq(𝑎1, 𝑎2, 𝑏)](https://github.com/lnatamm/MetodoGrafico/blob/main/main.py#L13): 
+>### [AddEq(𝑎1, 𝑎2, 𝑏)](https://github.com/lnatamm/MetodoGrafico/blob/main/main.py#L68): 
 >Adiciona a equação 𝑎1𝑥 + 𝑎2
 >𝑦 <= 𝑏 à matriz 𝐴𝑏.
 >
->### [ListEq()](https://github.com/lnatamm/MetodoGrafico/blob/main/main.py#L16): 
+>### [ListEq()](https://github.com/lnatamm/MetodoGrafico/blob/main/main.py#L93): 
 >Lista as equações, numeradas de 0 a 𝑛 − 1.
 >
->### [RemoveEq(𝑘)](https://github.com/lnatamm/MetodoGrafico/blob/main/main.py#L22): 
+>### [RemoveEq(𝑘)](https://github.com/lnatamm/MetodoGrafico/blob/main/main.py#L101): 
 >remove a 𝑘-ésima equação da matriz 𝐴𝑏. Não é permitido remover as equações 0, 1, 2 e 3,
 >dadas pela inicialização.
 >
->### [CheckPoint(𝑥0, 𝑦0)](https://github.com/lnatamm/MetodoGrafico/blob/main/main.py#L27): 
+>### [CheckPoint(𝑥0, 𝑦0)](https://github.com/lnatamm/MetodoGrafico/blob/main/main.py#L109): 
 >Verifica se o ponto (𝑥0, 𝑦0) satisfaz todas as condições do problema.
 >
->### [GetSolution()](https://github.com/lnatamm/MetodoGrafico/blob/main/main.py#L35): 
+>### [GetSolution()](https://github.com/lnatamm/MetodoGrafico/blob/main/main.py#L171): 
 >Retorna uma solução ótima do problema. Caso a solução tenha alguma de suas coordenadas valendo
 >𝐼𝑁𝐹, retorna a string "Função Ilimitada".
